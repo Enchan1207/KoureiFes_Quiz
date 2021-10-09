@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ViewerController!
+{% endblock %}
+
+{% block body %}
+
+	<div id="wrapper">
+		<div class="card" id="main-container">
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="collapse show" id="Input">
+							<div class="container panel" id="input-panel">
+								{% for y in 0..(puzzle.height - 1) %}
+									<div class="row">
+										{% for x in 0..(puzzle.width - 1) %}
+											<div class="col">
+												<button class="btn btn-outline-dark" data-button-id="{{y * puzzle.width + x}}">{{y * puzzle.width + x}}</button>
+											</div>
+										{% endfor %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="collapse" id="Answer">
+								<div class="container panel" id="answer-panel">
+									<div class="row">
+										<div class="col">
+											<h5>Answer...</h5>
+										</div>
+									</div>
+									<div class="row">
+										<button class="btn btn-primary">Next</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
