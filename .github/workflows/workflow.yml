@@ -76,6 +76,10 @@ jobs:
     - name: Build assets
       run: |
         yarn encore prod
+
+    # .env.localをsecretsから展開
+    - name: make .env.local
+      run: echo "${{ secrets.DOTENV_LOCAL }}" > .env.local
     
     # リポジトリを圧縮
     - name: Compress repository contents
@@ -89,10 +93,6 @@ jobs:
         cd ../
         sftp ${{ env.DEPLOY_SERVER_HOST }}:${{ env.DEPLOY_REMOTE_PATH }} <<< $'put KoureiFes_Quiz.tgz'
         ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}; tar -xzf KoureiFes_Quiz.tgz"
-
-    # .env.localをsecretsから展開
-    - name: make .env.local
-      run: echo "${{ secrets.DOTENV_LOCAL }}" > .env.local
 
     # デプロイ先で走らせたいスクリプトを実行
     - name: Execute custom deploy sctipts
