@@ -1,4 +1,3 @@
-# Deploy Workflow
 name: Deploy
 
 on:
@@ -14,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    # Checkout repository
+    # リポジトリをチェックアウト
     - uses: actions/checkout@v2
 
-    # Install SSH key to VM
+    # SSHキーをインストール
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v1
       with:
@@ -25,21 +24,21 @@ jobs:
         name: id_rsa
         known-hosts: ${{ secrets.KNOWN_HOSTS }}
 
-    # Setup node.js 
+    # node.js
     - uses: actions/setup-node@v2
       with:
         node-version: '14'
 
-    # Setup PHP
+    # PHP
     - name: Setup PHP with composer v2
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.4'
         tools: composer:v2
 
-    # Cache node_modules
+    # nodeモジュールをキャッシュ
     - name: Cache node modules
-      id: node_modules-cache
+      id: node_modules_cache
       uses: actions/cache@v2
       env:
         cache-name: cache-node-modules
@@ -50,9 +49,14 @@ jobs:
           ${{ runner.os }}-node-modules-${{ env.cache-name }}-
           ${{ runner.os }}-node-modules-
 
-    # Cache composer packages
+    # nodeパッケージのインストール
+    - name: Install yarn dependencies
+      if: steps.node_modules_cache.outputs.cache-hit != 'true'
+      run: yarn install --force
+
+    # composerパッケージをキャッシュ
     - name: Cache composer packages
-      id: composer-cache
+      id: composer_cache
       uses: actions/cache@v2
       env:
         cache-name: cache-composer-packages
@@ -63,34 +67,37 @@ jobs:
           ${{ runner.os }}-composer-packages-${{ env.cache-name }}-
           ${{ runner.os }}-composer-packages-
 
-    # Install Dependencies
+    # composerパッケージのインストール
     - name: Install dependencies
-      run: |
-        composer update --prefer-dist --no-progress --no-suggest
-        yarn install --force
+      if: steps.composer_cache.outputs.cache-hit != 'true'
+      run: composer update --prefer-dist --no-progress --no-suggest
 
-    # Build assets
+    # アセットのビルド
     - name: Build assets
       run: |
         yarn encore prod
     
-    # Compress repository
+    # リポジトリを圧縮
     - name: Compress repository contents
       run: |
         cd ../
         tar -czf KoureiFes_Quiz.tgz KoureiFes_Quiz/
 
-    # Transfer, decompress
-    - name: Transfer using SFTP
+    # SFTPで転送して展開
+    - name: Transfer via SFTP
       run: |
         cd ../
         sftp ${{ env.DEPLOY_SERVER_HOST }}:${{ env.DEPLOY_REMOTE_PATH }} <<< $'put KoureiFes_Quiz.tgz'
         ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}; tar -xzf KoureiFes_Quiz.tgz"
 
-    # Execute Custom commands at deploy server
+    # .env.localをsecretsから展開
+    - name: make .env.local
+      run: echo "${{ secrets.DOTENV_LOCAL }}" > .env.local
+
+    # デプロイ先で走らせたいスクリプトを実行
     - name: Execute custom deploy sctipts
       run: cat deploy.sh | ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }};bash"
 
-    # Remove Compressed file
+    # SFTPで送ったファイルを削除
     - name: Remove compressed file
       run: ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}; rm KoureiFes_Quiz.tgz"
