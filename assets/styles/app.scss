@@ -1,12 +1,54 @@
 // assets/styles/global.scss
 
-// customize some Bootstrap variables
-$primary: darken(#428bca, 20%);
-
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
-/* assets/styles/app.css */
-body {
-    background-color: lightgray;
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100vw;
+    height: 100vh;
+
+    .panel {
+        width: 18rem;
+    }
+}
+
+#main-container {
+
+    padding: 12px;
+    box-sizing: border-box;
+
+    .card-body{
+        padding: 0;
+    }
+}
+
+#input-panel {
+
+    .row{
+        height: 100%;
+        align-items: center;
+
+        .col{
+            text-align: center;
+            padding: 6px;
+
+            button {
+                $size: 100%;
+                width: $size;
+                height: $size;
+
+                aspect-ratio: 1;
+                border-radius: 5px;
+                border-width: 2px;
+                
+            }
+        }
+    }
+
 }
