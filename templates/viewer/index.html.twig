@@ -15,8 +15,17 @@
 								{% for y in 0..(puzzle.height - 1) %}
 									<div class="row">
 										{% for x in 0..(puzzle.width - 1) %}
+											{% set index = y * puzzle.width + x %}
+											{% set color = puzzle.colors[index] %}
 											<div class="col">
-												<button class="btn btn-outline-dark" data-button-id="{{y * puzzle.width + x}}">{{y * puzzle.width + x}}</button>
+												<button 
+													class="btn btn-outline-dark puzzlebutton"
+													data-button-id="{{index}}"
+													style="border-color:{{ color }}"
+													onMouseOut="this.style.background='';"
+													onMouseOver="this.style.background='{{ color }}';"
+												>
+												</button>
 											</div>
 										{% endfor %}
 									</div>
@@ -34,7 +43,7 @@
 								<div class="container panel" id="answer-panel">
 									<div class="row">
 										<div class="col">
-											<h5>Answer...</h5>
+											<h5>{{ puzzle.reward }}</h5>
 										</div>
 									</div>
 									<div class="row">
