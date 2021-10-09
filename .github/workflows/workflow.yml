@@ -1,0 +1,96 @@
+# Deploy Workflow
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    env:
+      DEPLOY_SERVER_HOST: r-techlab@r-techlab.sakura.ne.jp # デブロイサーバー
+      DEPLOY_REMOTE_PATH: /home/r-techlab/www/Enchan/App/ # デプロイ先リモートパス
+
+    runs-on: ubuntu-latest
+    steps:
+
+    # Checkout repository
+    - uses: actions/checkout@v2
+
+    # Install SSH key to VM
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v1
+      with:
+        private-key: ${{ secrets.SSH_KEY }}
+        name: id_rsa
+        known-hosts: ${{ secrets.KNOWN_HOSTS }}
+
+    # Setup node.js 
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # Setup PHP
+    - name: Setup PHP with composer v2
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        tools: composer:v2
+
+    # Cache node_modules
+    - name: Cache node modules
+      id: node_modules-cache
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-${{ env.cache-name }}-
+          ${{ runner.os }}-node-modules-
+
+    # Cache composer packages
+    - name: Cache composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-composer-packages
+      with:
+        path: '**/vendor'
+        key: ${{ runner.os }}-composer-packages-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-packages-${{ env.cache-name }}-
+          ${{ runner.os }}-composer-packages-
+
+    # Install Dependencies
+    - name: Install dependencies
+      run: |
+        composer update --prefer-dist --no-progress --no-suggest
+        yarn install --force
+
+    # Build assets
+    - name: Build assets
+      run: |
+        yarn encore prod
+    
+    # Compress repository
+    - name: Compress repository contents
+      run: |
+        cd ../
+        tar -czf KoureiFes_Quiz.tgz KoureiFes_Quiz/
+
+    # Transfer, decompress
+    - name: Transfer using SFTP
+      run: |
+        cd ../
+        sftp ${{ env.DEPLOY_SERVER_HOST }}:${{ env.DEPLOY_REMOTE_PATH }} <<< $'put KoureiFes_Quiz.tgz'
+        ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}; tar -xzf KoureiFes_Quiz.tgz"
+
+    # Execute Custom commands at deploy server
+    - name: Execute custom deploy sctipts
+      run: cat deploy.sh | ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }};bash"
+
+    # Remove Compressed file
+    - name: Remove compressed file
+      run: ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}; rm KoureiFes_Quiz.tgz"
