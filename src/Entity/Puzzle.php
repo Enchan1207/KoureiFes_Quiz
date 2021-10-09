@@ -37,6 +37,11 @@ class Puzzle
      */
     private $colors = [];
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $reward;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Puzzle
     public function setColors(array $colors): self
     {
         $this->colors = $colors;
+
+        return $this;
+    }
+
+    public function getReward(): ?string
+    {
+        return $this->reward;
+    }
+
+    public function setReward(string $reward): self
+    {
+        $this->reward = $reward;
 
         return $this;
     }
