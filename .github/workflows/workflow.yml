@@ -49,10 +49,12 @@ jobs:
           ${{ runner.os }}-node-modules-${{ env.cache-name }}-
           ${{ runner.os }}-node-modules-
 
-    # nodeパッケージのインストール
+    # nodeパッケージの更新とインストール
     - name: Install yarn dependencies
       if: steps.node_modules_cache.outputs.cache-hit != 'true'
-      run: yarn install --force
+      run: |
+        yarn upgrade
+        yarn install --force
 
     # composerパッケージをキャッシュ
     - name: Cache composer packages
