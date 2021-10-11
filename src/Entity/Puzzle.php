@@ -1,12 +1,13 @@
 <?php
-
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PuzzleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PuzzleRepository::class)
+ * @ApiResource
  */
 class Puzzle
 {
