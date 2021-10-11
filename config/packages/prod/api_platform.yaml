@@ -1,0 +1,11 @@
+# production api_platform.yaml
+api_platform:
+  # ドキュメント、Swagger無効化
+  enable_docs: false
+  enable_swagger_ui: false
+  enable_swagger: false
+
+  # 受入可能フォーマットをapplication/jsonに限定 これで環境に依存せず常にjsonを返してくれる
+  formats:
+    json:
+      mime_types: ["application/json"]
