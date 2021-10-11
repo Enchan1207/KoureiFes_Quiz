@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ViewerController!
+{% block title %}
+	Hello ViewerController!
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('viewer') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('viewer') }}
 {% endblock %}
 
 {% block body %}
@@ -18,14 +27,7 @@
 											{% set index = y * puzzle.width + x %}
 											{% set color = puzzle.colors[index] %}
 											<div class="col">
-												<button 
-													class="btn btn-outline-dark puzzlebutton"
-													data-button-id="{{index}}"
-													style="border-color:{{ color }}"
-													onMouseOut="this.style.background='';"
-													onMouseOver="this.style.background='{{ color }}';"
-												>
-												</button>
+												<button class="btn btn-outline-dark puzzlebutton" data-button-id="{{index}}" style="border-color:{{ color }}" onmouseout="this.style.background='';" onmouseover="this.style.background='{{ color }}';"></button>
 											</div>
 										{% endfor %}
 									</div>
