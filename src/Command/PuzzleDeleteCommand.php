@@ -11,17 +11,18 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 #[AsCommand(
-    name: 'puzzle:list',
-    description: 'list up all Puzzles',
+    name: 'puzzle:delete',
+    description: 'Add a short description for your command',
 )]
-class PuzzleListCommand extends Command
+class PuzzleDeleteCommand extends Command
 {
-
     private $puzzleRepository;
+    private $entityManager;
 
     public function __construct(ContainerInterface $container)
     {
         $this->puzzleRepository = $container->get('doctrine')->getRepository(Puzzle::class);
+        $this->entityManager = $container->get('doctrine')->getManager();
 
         parent::__construct();
     }
@@ -34,17 +35,26 @@ class PuzzleListCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title("Puzzle List:");
+        $io->title("Delete puzzle:");
 
         $puzzles = $this->puzzleRepository->findAll();
-        
-        foreach ($puzzles as $puzzle) {
+        $stringRepresentedPuzzles = array_map(function ($puzzle) {
             $answer = implode(",", $puzzle->getAnswer());
-            $stringRepresentedPuzzle = "ID:{$puzzle->getId()} {$puzzle->getWidth()}×{$puzzle->getHeight()} ({$answer}) -> {$puzzle->getReward()}";
-            $io->text($stringRepresentedPuzzle);
-        }
+            return "ID:{$puzzle->getId()} {$puzzle->getWidth()}×{$puzzle->getHeight()} ({$answer}) -> {$puzzle->getReward()}";
+        }, $puzzles);
 
-        $io->info("To add new Puzzle, exec `console puzzle:add`.");
+        // 選択結果はそのまま選択肢の文字列 (indexで欲しい)
+        $puzzle = $io->choice("Which Puzzle do you want to remove?", $stringRepresentedPuzzles);
+        $index = array_search($puzzle, $stringRepresentedPuzzles);
+
+        // 削除
+        $target = $puzzles[$index];
+        
+        $this->entityManager->remove($target);
+
+        $io->success("Puzzle (ID: {$target->getId()}) has been deleted successfully.");
+
+        $this->entityManager->flush();
 
         return Command::SUCCESS;
     }
