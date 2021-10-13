@@ -4,6 +4,10 @@ on:
   push:
     branches: [ master ]
 
+  pull_request:
+    branches:
+      - master
+
 jobs:
   deploy:
     env:
@@ -99,7 +103,7 @@ jobs:
 
     # デプロイ先で走らせたいスクリプトを実行
     - name: Execute custom deploy sctipts
-      run: cat deploy.sh | ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}${{ env.PROJECT_NAME }};bash"
+      run: ssh ${{ env.DEPLOY_SERVER_HOST }} "cd ${{ env.DEPLOY_REMOTE_PATH }}${{ env.PROJECT_NAME }};bash deploy.sh"
 
     # SFTPで送ったファイルを削除
     - name: Remove compressed file
