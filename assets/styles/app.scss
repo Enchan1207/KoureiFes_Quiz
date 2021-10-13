@@ -50,19 +50,29 @@
     }
 }
 
-#Answer{
-    transition: all ease-in-out .3s;
+#Answer {
+    transition: all ease-in-out 0.3s;
     opacity: 0;
     overflow: hidden;
     height: 0;
 
-    h5{
-        transition: all ease-in-out .3s;
+    h5 {
+        transition: all ease-in-out 0.3s;
         text-align: center;
     }
 }
 
-#Answer.show{
+#Answer.show {
     height: fit-content;
     opacity: 1;
+}
+
+.puzzlebutton {
+    padding: 12px;
+
+    img {
+        opacity: 0;
+        width: 100%;
+        object-fit: contain;
+    }
 }

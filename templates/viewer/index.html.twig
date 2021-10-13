@@ -19,7 +19,9 @@
 											{% set index = y * puzzle.width + x %}
 											{% set color = puzzle.colors[index] %}
 											<div class="col">
-												<button class="btn btn-outline-light puzzlebutton" data-button-id="{{index}}" style="border-color:{{ color }}" data-color="{{ color }}" data-pushed="false"></button>
+												<button class="btn btn-outline-light puzzlebutton" data-button-id="{{index}}" style="border-color:{{ color }}" data-color="{{ color }}" data-pushed="false">
+													<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAABRGlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8rAxcDLIMrAwsCfmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsisj+pnWp22n1g5L+347f+5vnMx1aMArpTU4mQg/QeIU5MLikoYGBhTgGzl8pICELsDyBYpAjoKyJ4DYqdD2BtA7CQI+whYTUiQM5B9A8gWSM5IBJrB+ALI1klCEk9HYkPtBQHuCCMTC2N9IGFIwLVkgJLUihIQ7ZxfUFmUmZ5RouAIDKVUBc+8ZD0dBSMDI6CdoDCHqP58AxyWjGIcCLEMcwYGk3VAQX2EWMoZBoZt+gwMfB0IMc3LDAyiygwMh0sLEosS4Q5g/MZSnGZsBGFzb2dgYJ32///ncAYGdk0Ghr/X////vf3//7/LGBiYbzEwHPgGAH8SYIBRQKeFAAAAVmVYSWZNTQAqAAAACAABh2kABAAAAAEAAAAaAAAAAAADkoYABwAAABIAAABEoAIABAAAAAEAAAAooAMABAAAAAEAAAAoAAAAAEFTQ0lJAAAAU2NyZWVuc2hvdC5s9MsAAAHUaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjQwPC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjQwPC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6VXNlckNvbW1lbnQ+U2NyZWVuc2hvdDwvZXhpZjpVc2VyQ29tbWVudD4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CtsorekAAABcSURBVFgJ7dLBDQAQFAVB9N8zooW5OKz7Jj/jzX3f+Pitj297p3Wg/lCCCaqA9m0wQRXQvg0mqALat8EEVUD7NpigCmjfBhNUAe3bYIIqoH0bTFAFtG+DCaqA9gc+6gRMDhZMigAAAABJRU5ErkJggg==">
+												</button>
 											</div>
 										{% endfor %}
 									</div>
