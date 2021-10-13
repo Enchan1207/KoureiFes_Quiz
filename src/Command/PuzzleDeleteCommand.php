@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 #[AsCommand(
     name: 'puzzle:delete',
-    description: 'Add a short description for your command',
+    description: 'delete Puzzle entity',
 )]
 class PuzzleDeleteCommand extends Command
 {
