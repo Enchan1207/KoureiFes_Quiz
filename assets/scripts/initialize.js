@@ -1,6 +1,7 @@
 //
 // 初期化処理
 //
+import { initButton } from './button';
 
 export const initialize = () => {
 
@@ -10,6 +11,10 @@ export const initialize = () => {
         console.log("Resize");
         setWindowHeight();
     }
+
+    // パズルボタン初期化
+    const buttons = document.querySelectorAll(".puzzlebutton");
+    buttons.forEach(initButton);
 
 };
 

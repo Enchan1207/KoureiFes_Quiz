@@ -25,7 +25,7 @@ export const showAnswer = () => {
 
         let index = 0;
         const _int = setInterval(() => {
-            answerContentElement.innerText = answerContentElement.innerText + answerContent[index];
+            answerContentElement.innerHTML += answerContent[index];
 
             index++;
             if (index >= answerContent.length) {
