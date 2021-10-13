@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Hello ViewerController!
+	Puzzle
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
 			<div class="card-body">
 				<div class="container">
 					<div class="row">
-						<div class="collapse show" id="Input">
+						<div id="Input">
 							<div class="container panel" id="input-panel">
 								{% for y in 0..(puzzle.height - 1) %}
 									<div class="row">
@@ -33,7 +33,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="collapse" id="Answer">
+							<div id="Answer">
 								<div class="container panel" id="answer-panel">
 									<div class="row">
 										<div class="col">
