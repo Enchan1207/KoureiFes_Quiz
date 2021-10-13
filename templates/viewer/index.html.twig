@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Hello ViewerController!
+	Puzzle
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
 			<div class="card-body">
 				<div class="container">
 					<div class="row">
-						<div class="collapse show" id="Input">
+						<div id="Input" data-buffer="" data-answer="{{ puzzle.answer|join(",") }}">
 							<div class="container panel" id="input-panel">
 								{% for y in 0..(puzzle.height - 1) %}
 									<div class="row">
@@ -19,7 +19,7 @@
 											{% set index = y * puzzle.width + x %}
 											{% set color = puzzle.colors[index] %}
 											<div class="col">
-												<button class="btn btn-outline-dark puzzlebutton" data-button-id="{{index}}" style="border-color:{{ color }}" onmouseout="this.style.background='';" onmouseover="this.style.background='{{ color }}';"></button>
+												<button class="btn btn-outline-light puzzlebutton" data-button-id="{{index}}" style="border-color:{{ color }}" data-color="{{ color }}" data-pushed="false"></button>
 											</div>
 										{% endfor %}
 									</div>
@@ -33,15 +33,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="collapse" id="Answer">
+							<div id="Answer">
 								<div class="container panel" id="answer-panel">
 									<div class="row">
 										<div class="col">
-											<h5>{{ puzzle.reward }}</h5>
+											<h5 data-content="{{ puzzle.reward }}"></h5>
 										</div>
-									</div>
-									<div class="row">
-										<button class="btn btn-primary">Next</button>
 									</div>
 								</div>
 							</div>

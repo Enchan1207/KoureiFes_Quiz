@@ -4,9 +4,13 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../styles/app.scss';
+import { initialize } from './initialize';
 
-// Need jQuery? Install it with "yarn add jquery"(or "npm install jquery"), then uncomment to import it.
-// import $ from 'jquery';
+window.addEventListener('load', () => {
 
-console.log('Hello Webpack Encore! Edit me in assets/app.js');
+    // ウィンドウ初期化
+    initialize();
+
+    
+});
 
