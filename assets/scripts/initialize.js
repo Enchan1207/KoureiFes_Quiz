@@ -4,7 +4,7 @@
 
 export const initialize = () => {
 
-    // リサイズ時に高度を再設定
+    // リサイズ時に高さを再設定
     setWindowHeight();
     window.onresize = () =>{
         console.log("Resize");
