@@ -15,7 +15,8 @@
 		{% endblock %}
 
 		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
+			{# baseでappを読むとエラーページでもアプリを実行しようとしてしまうのでパス #}
+			{# {{ encore_entry_script_tags('app') }} #}
 		{% endblock %}
 	</head>
 	<body>
