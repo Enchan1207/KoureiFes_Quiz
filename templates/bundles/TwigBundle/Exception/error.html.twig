@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div id="wrapper">
+		<div class="card" id="main-container">
+			<div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="display-4">Symfony Application Error</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>HTTP {{ status_code }}</p>
+                            <p>エラーが発生しました。QRコードを読み込み直してください。</p>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
