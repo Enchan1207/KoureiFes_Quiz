@@ -10,12 +10,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-#[AsCommand(
-    name: 'puzzle:delete',
-    description: 'delete Puzzle entity',
-)]
 class PuzzleDeleteCommand extends Command
 {
+    protected static $defaultName = 'puzzle:delete';
+
     private $puzzleRepository;
     private $entityManager;
 
@@ -29,6 +27,7 @@ class PuzzleDeleteCommand extends Command
 
     protected function configure(): void
     {
+        $this->setDescription("delete Puzzle entity");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

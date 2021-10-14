@@ -11,12 +11,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'puzzle:add',
-    description: 'add a new puzzle',
-)]
 class PuzzleAddCommand extends Command
 {
+    protected static $defaultName = 'puzzle:add';
 
     private $entityManager;
 
@@ -29,6 +26,7 @@ class PuzzleAddCommand extends Command
 
     protected function configure(): void
     {
+        $this->setDescription("add a new puzzle");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

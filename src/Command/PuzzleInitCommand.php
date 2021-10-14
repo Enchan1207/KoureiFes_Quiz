@@ -14,12 +14,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'puzzle:init',
-    description: 'remove all Puzzles',
-)]
 class PuzzleInitCommand extends Command
 {
+
+    protected static $defaultName = 'puzzle:init';
+
     /**
      * @var PuzzleRepository $puzzleRepository
      */
@@ -40,6 +39,7 @@ class PuzzleInitCommand extends Command
 
     protected function configure(): void
     {
+        $this->setDescription("remove all Puzzles");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
