@@ -10,12 +10,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-#[AsCommand(
-    name: 'puzzle:list',
-    description: 'list up all Puzzles',
-)]
 class PuzzleListCommand extends Command
 {
+
+    protected static $defaultName = 'puzzle:list';
 
     private $puzzleRepository;
 
@@ -28,6 +26,7 @@ class PuzzleListCommand extends Command
 
     protected function configure(): void
     {
+        $this->setDescription("list up all Puzzles");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

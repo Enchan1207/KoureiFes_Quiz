@@ -77,7 +77,7 @@ jobs:
     # composerパッケージのインストール
     - name: Install dependencies
       if: steps.composer_cache.outputs.cache-hit != 'true'
-      run: composer update --prefer-dist --no-progress --no-suggest
+      run: composer update --prefer-dist
 
     # アセットのビルド
     - name: Build assets
