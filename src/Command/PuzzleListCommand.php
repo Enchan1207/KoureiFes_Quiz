@@ -39,7 +39,7 @@ class PuzzleListCommand extends Command
         
         foreach ($puzzles as $puzzle) {
             $answer = implode(",", $puzzle->getAnswer());
-            $stringRepresentedPuzzle = "ID:{$puzzle->getId()} {$puzzle->getWidth()}×{$puzzle->getHeight()} ({$answer}) -> {$puzzle->getReward()}";
+            $stringRepresentedPuzzle = "\"{$puzzle->getName()}\" ID:{$puzzle->getId()} {$puzzle->getWidth()}×{$puzzle->getHeight()} ({$answer}) -> {$puzzle->getReward()}";
             $io->text($stringRepresentedPuzzle);
         }
 
