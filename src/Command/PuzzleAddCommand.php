@@ -42,6 +42,8 @@ class PuzzleAddCommand extends Command
 
         $io->title("Register new puzzle.");
 
+        $name = $io->ask("Puzzle name", "new puzzle");
+
         $width = $io->ask("Puzzle width", 3, $validateInteger);
         $height = $io->ask("Puzzle height", 3, $validateInteger);
 
@@ -108,6 +110,7 @@ class PuzzleAddCommand extends Command
         $puzzle->setAnswer($answer);
         $puzzle->setColors($colors);
         $puzzle->setReward($reward);
+        $puzzle->setName($name);
 
 
         try {

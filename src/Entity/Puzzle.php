@@ -4,9 +4,11 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PuzzleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PuzzleRepository::class)
+ * @UniqueEntity("name")
  * @ApiResource
  */
 class Puzzle
@@ -42,6 +44,11 @@ class Puzzle
      * @ORM\Column(type="string", length=255)
      */
     private $reward;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $name;
 
     public function getId(): ?int
     {
@@ -104,6 +111,18 @@ class Puzzle
     public function setReward(string $reward): self
     {
         $this->reward = $reward;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

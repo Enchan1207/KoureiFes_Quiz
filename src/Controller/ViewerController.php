@@ -10,17 +10,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ViewerController extends AbstractController
 {
-    #[Route('/viewer/{id}', name: 'viewer', requirements: ['page'=>'\d+'])]
-    public function index(int $id): Response
+    #[Route('/viewer/{name}', name: 'viewer')]
+    public function index(string $name): Response
     {
-        // IDに対応するPuzzleを持ってくる
+        // nameに対応するPuzzleを持ってくる
         $doctrine = $this->getDoctrine();
         $repository = $doctrine->getRepository(Puzzle::class);
 
-        $puzzle = $repository->findOneBy(['id' => $id]);
+        $puzzle = $repository->findOneBy(['name' => $name]);
 
         if ($puzzle == NULL) {
-            throw new NotFoundHttpException("Invalid Puzzle ID: $id");
+            throw new NotFoundHttpException("Invalid Puzzle Name: $name");
         }
 
         return $this->render('viewer/index.html.twig', [
